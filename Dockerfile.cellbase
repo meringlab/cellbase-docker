@@ -1,69 +1,18 @@
-FROM        ubuntu:14.04
+FROM        opencb/java8
 MAINTAINER  Milan Simonovic <mbsimonovic@gmail.com>
 
 # update to invalidate docker's cache and force apt-get update
 ENV REFRESHED_AT 2015-08-29
 
-## java first:
-## 
-
-ENV         DEBIAN_FRONTEND noninteractive
-
-RUN         apt-get update; apt-get install -y software-properties-common 
-
-RUN         echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
-            echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections
-
-RUN         add-apt-repository -y ppa:webupd8team/java && \
-            apt-get update && \
-            apt-get install -y oracle-java8-installer oracle-java8-set-default
-
-RUN 	        rm -rf /tmp/* /var/tmp/* /var/cache/oracle-jdk8-installer
-
-# to cleanup
-#RUN     apt-get remove -yq software-properties-common && \
-#	     apt-get autoremove -yq && \
-#	         apt-get clean -yq && \
-#		     rm -rf /var/lib/apt/lists/*
-
-ENV		         JAVA_HOME  /usr/lib/jvm/java-8-oracle
-
 # need perl for ensembl api:
-
 RUN apt-get update && apt-get install -y git maven perl build-essential curl wget libmysqlclient-dev
 
-#    cpanm --self-upgrade && \ ?
-RUN curl -L http://cpanmin.us | perl - App::cpanminus && \
-    cpanm  install DBI && \
-    cpanm  install DBD::mysql && \
-    cpanm  install JSON
-
-RUN mkdir /opt/cellbase /opt/ensembl
-
-## ENSEMBL-API
-WORKDIR /opt/ensembl
-RUN wget https://github.com/bioperl/bioperl-live/archive/bioperl-release-1-2-3.tar.gz && \
-    tar zxf bioperl-release-1-2-3.tar.gz && \
-    mv bioperl-live-bioperl-release-1-2-3 bioperl-1.2.3
-
-# After downloading BioPerl we need to download the API tar ball from FTP.
-# This tar ball contains all the required APIs.
-RUN wget ftp://ftp.ensembl.org/pub/ensembl-api.tar.gz && \
-    tar zxf ensembl-api.tar.gz
-
-ENV PERL5LIB /opt/ensembl/ensembl/modules:/opt/ensembl/ensembl-variation/modules:/opt/ensembl/ensembl-compara/modules:/opt/ensembl/ensembl-funcgen/modules:/opt/ensembl/ensembl-tools/modules:/opt/ensembl/bioperl-1.2.3/
-
 ## CELLBASE 
+RUN mkdir /opt/cellbase
 WORKDIR /opt/
-# XXX ~.m2/settings.xml ?
 RUN git clone -b master https://github.com/opencb/cellbase.git
-
+COPY m2_settings.xml ~/.m2/settings.xml
 WORKDIR /opt/cellbase
 RUN mvn clean install -DskipTests 
 RUN bash build.sh
 
-COPY build-cellbase.sh /opt/cellbase/build/ 
-WORKDIR /opt/cellbase/build
-RUN chmod u+x build-cellbase.sh
-
-CMD ["build-cellbase.sh"]
