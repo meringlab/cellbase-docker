@@ -7,10 +7,10 @@ and this project automates all that.
 
 Running cellbase includes the following:
 
- 1. checking and compiling the code, 
- 2. installing [ensembl-api](http://www.ensembl.org/info/docs/api/api_installation.html), 
- 3. perl and a few cpan modules
- 4. setting up [mongodb](https://www.mongodb.org/), 
+ 1. checking and compiling the code
+ 2. installing [ensembl-api](http://www.ensembl.org/info/docs/api/api_installation.html)
+ 3. perl and a few cpan modules (JSON, mysql, ..)
+ 4. setting up [mongodb](https://www.mongodb.org/)
  5. cellbase download task
  6. cellbase build task
  7. cellbase load task
@@ -24,17 +24,14 @@ Have a look at the make.sh script for required steps.
 You can report bugs or request new features at [GitHub issue tracking](https://github.com/meringlab/cellbase-docker/issues).
 
 ### Release Notes 
-Releases notes are available at [GitHub releases](https://github.com/opencb/cellbase/releases).
+Releases notes are available at [GitHub releases](https://github.com/meringlab/cellbase-docker/releases).
 
-### Maintainers
-
-* Milan Simonovic (milan.simonovic@imls.uzh.ch)
-
-##### Contributing
+### Contributing
 This is an open-source project. I appreciate any help and feeback!
 You can contribute in many different ways such as simple bug reporting
 and feature requests. Dependending on your skills you are more than
 welcome to fix bugs and work on new features, but make sure you pick an
 existing issue. 
 
-
+### Maintainers
+* Milan Simonovic (milan.simonovic@imls.uzh.ch)
