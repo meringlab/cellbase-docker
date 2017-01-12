@@ -2,7 +2,7 @@ FROM        opencb/java8
 MAINTAINER  Milan Simonovic <mbsimonovic@gmail.com>
 
 # update to invalidate docker's cache and force apt-get update
-ENV REFRESHED_AT 2015-08-29
+ENV REFRESHED_AT 2017-01-12
 
 # need perl for ensembl api:
 RUN apt-get update && apt-get install -y git maven perl build-essential curl wget libmysqlclient-dev
@@ -10,8 +10,6 @@ RUN apt-get update && apt-get install -y git maven perl build-essential curl wge
 ## CELLBASE 
 RUN mkdir /opt/cellbase
 WORKDIR /opt/
-
-ENV REFRESHED_AT 2015-10-07
 
 RUN git clone -b master https://github.com/opencb/cellbase.git
 
@@ -21,6 +19,6 @@ WORKDIR /opt/cellbase
 # if clone was from docker cache, then pull?
 RUN git pull origin master
 
-RUN mvn clean install -DskipTests 
+ 
 RUN bash build.sh
 
