@@ -1,8 +1,8 @@
-FROM        ubuntu:14.04
+FROM        ubuntu:xenial
 MAINTAINER  Milan Simonovic <mbsimonovic@gmail.com>
 
 # update to invalidate docker's cache and force apt-get update
-ENV REFRESHED_AT 2015-08-29
+ENV REFRESHED_AT 2017-01-12
 
 ## java first:
 ## 
