@@ -18,7 +18,3 @@ WORKDIR /opt/cellbase
 
 # if clone was from docker cache, then pull?
 RUN git pull origin master
-
- 
-RUN bash build.sh
-
