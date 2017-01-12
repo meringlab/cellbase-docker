@@ -10,6 +10,7 @@
 			"options": {
 				"authenticationDatabase": "${CELLBASE.DB.MONGODB.AUTHENTICATIONDATABASE}",
 				"readPreference": "${CELLBASE.DB.MONGODB.READPREFERENCE}",
+				"mongodb-index-folder":"mongodb-scripts",
 				"replicaSet": "${CELLBASE.DB.MONGODB.REPLICASET}"
 			}
 		},
