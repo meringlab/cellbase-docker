@@ -2,7 +2,7 @@ FROM  opencb/cellbase
 MAINTAINER  Milan Simonovic <mbsimonovic@gmail.com>
 
 ENV TOMCAT_MAJOR 8
-ENV TOMCAT_VERSION 8.0.30
+ENV TOMCAT_VERSION 8.0.39
 ENV TOMCAT_TGZ_URL https://www.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz
 ENV CATALINA_HOME /opt/tomcat
 
@@ -37,7 +37,7 @@ RUN set -x \
     && rm -rf webapps/* \
     && rm tomcat.tar.gz*
 
-RUN cp /opt/cellbase/build/cellbase.war webapps/ROOT.war
+RUN cp /opt/cellbase/build/cellbase*.war webapps/ROOT.war
 
 EXPOSE 8080
 
