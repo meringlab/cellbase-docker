@@ -29,8 +29,6 @@ WORKDIR /opt/ensembl
 RUN wget https://github.com/bioperl/bioperl-live/archive/bioperl-release-$BIOPERL_REL.tar.gz && \
     tar zxf bioperl-release-$BIOPERL_REL.tar.gz && \
     mv bioperl-live-bioperl-release-$BIOPERL_REL bioperl-$BIOPERL_VER
-#	wget https://github.com/Ensembl/ensembl-io/archive/release/87.zip && \	unzip -x 87.zip
-
 
 # After downloading BioPerl we need to download the API tar ball from FTP.
 # This tar ball contains all the required APIs.
