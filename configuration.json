@@ -188,7 +188,7 @@
 				"scientificName":"Caenorhabditis elegans",
 				"assemblies":[
 					{
-						"ensemblVersion":"29_85_245",
+						"ensemblVersion":"32_85_250",
 						"name":"WBcel235"
 					}
 				],
@@ -207,7 +207,7 @@
 				"scientificName":"Saccharomyces cerevisiae",
 				"assemblies":[
 					{
-						"ensemblVersion":"29_85_4",
+						"ensemblVersion":"32_85_4",
 						"name":"R64-1-1"
 					}
 				],
