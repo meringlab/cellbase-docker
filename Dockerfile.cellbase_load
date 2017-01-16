@@ -1,11 +1,13 @@
 FROM  opencb/cellbase
 MAINTAINER  Milan Simonovic <mbsimonovic@gmail.com>
-ENV REFRESHED_AT 2017-01-12
+ENV REFRESHED_AT 2017-01-16
 
+ENV ENSEMBL_REL 85
 ENV BIOPERL_REL 1-6-1
 ENV BIOPERL_VER 1.6.1
 
 ## ENSEMBL
+#TODO have a look at https://github.com/gawbul/docker-ensembl/blob/master/Dockerfile
 
 # need perl for ensembl api:
 # see docs at http://www.ensembl.org/info/docs/api/api_installation.html
@@ -30,11 +32,14 @@ RUN wget https://github.com/bioperl/bioperl-live/archive/bioperl-release-$BIOPER
     tar zxf bioperl-release-$BIOPERL_REL.tar.gz && \
     mv bioperl-live-bioperl-release-$BIOPERL_REL bioperl-$BIOPERL_VER
 
-# After downloading BioPerl we need to download the API tar ball from FTP.
-# This tar ball contains all the required APIs.
-RUN wget ftp://ftp.ensembl.org/pub/ensembl-api.tar.gz && \
-    tar zxf ensembl-api.tar.gz
-
+# FTP only contains the latest version, and API VERSION MUST MATCH RELEASE VERSION!
+## After downloading BioPerl we need to download the API tar ball from FTP.
+## This tar ball contains all the required APIs.
+## RUN wget ftp://ftp.ensembl.org/pub/ensembl-api.tar.gz && tar zxf ensembl-api.tar.gz
+RUN git clone https://github.com/Ensembl/ensembl-git-tools.git && \
+    export PATH=$PWD/ensembl-git-tools/bin:$PATH && \
+    git ensembl --clone api && \
+    git ensembl --checkout --branch release/$ENSEMBL_REL api
 
 ENV PERL5LIB /opt/ensembl/ensembl/modules:/opt/ensembl/ensembl-variation/modules:/opt/ensembl/ensembl-compara/modules:/opt/ensembl/ensembl-funcgen/modules:/opt/ensembl/ensembl-io/modules:/opt/ensembl/ensembl-tools/modules:/opt/ensembl/bioperl-$BIOPERL_VER/
 
@@ -42,5 +47,8 @@ ENV PERL5LIB /opt/ensembl/ensembl/modules:/opt/ensembl/ensembl-variation/modules
 COPY build-cellbase.sh /opt/cellbase/build/ 
 WORKDIR /opt/cellbase/build
 RUN chmod u+x build-cellbase.sh
+
+# tmp fix for https://github.com/opencb/cellbase/issues/309
+RUN ADD gene_extra_info.pl bin/ensembl-scripts/
 
 CMD ["build-cellbase.sh"]
