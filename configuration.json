@@ -31,7 +31,7 @@
 	"download": {
 		"ensembl": {
 			"database": {
-				"host": "ensembldb.ensembl.org:3306",
+				"host": "ensembl-db:3306",
 				"user": "anonymous",
 				"password": ""
 			},
