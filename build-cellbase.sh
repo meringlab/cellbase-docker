@@ -11,7 +11,7 @@ mkdir build
 
 ./bin/cellbase.sh download $OPTS --species scerevisiae --assembly R64-1-1 --output ensembl
 ./bin/cellbase.sh build    $OPTS --species scerevisiae  -a R64-1-1 --input ensembl/saccharomyces_cerevisiae_r64-1-1/ --common ensembl/common/ --output build/scerevisiae/
-./bin/cellbase.sh load     $OPTS --input build/scerevisiae/ --database cellbase_scerevisiae_r64-1-1_v4
+./bin/cellbase.sh load     $OPTS --input build/scerevisiae/ --database cellbase_scerevisiae_r6411_v4
 
 ./bin/cellbase.sh download $OPTS --species drerio --assembly GRCz10 --output ensembl
 ./bin/cellbase.sh build    $OPTS --species drerio  -a GRCz10 --input ensembl/danio_rerio_grcz10/ --common ensembl/common/ --output build/drerio/
